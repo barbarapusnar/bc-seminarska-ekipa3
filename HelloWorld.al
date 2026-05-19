@@ -10,6 +10,6 @@ pageextension 50110 CustomerListExt extends "Customer List"
 {
     trigger OnOpenPage();
     begin
-        Message('mmmm im soo green');
+        Message('uhhhh');
     end;
 }
