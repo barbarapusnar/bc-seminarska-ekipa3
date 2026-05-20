@@ -25,6 +25,9 @@ table 50111 Bicycle
         field(3; Description; Text[150])
         {
             Caption = 'Description';
+            // Naredi LOOKUP za to
+            //FieldClass = FlowField;
+            //CalcFormula = lookup();
         }
         field(4; "Status"; Enum "Bicycle Status")
         {
