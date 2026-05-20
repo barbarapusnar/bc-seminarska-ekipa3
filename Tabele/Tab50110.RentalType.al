@@ -30,13 +30,17 @@ table 50110 "Rental Type"
             begin
                 if not "Requires Deposit"
                 then
-                    "Deposit Amount" => 0;
+                    "Deposit Amount" := 0;
             end;
         }
         field(6; "Deposit Amount"; Decimal)
         {
             Caption = 'Deposit Amount';
-
+            trigger OnValidate()
+            begin
+                if "Requires Deposit" and ("Deposit Amount" <= 0) then
+                    Error('Znesek mora bit večji od 0.');
+            end;
         }
     }
     keys
