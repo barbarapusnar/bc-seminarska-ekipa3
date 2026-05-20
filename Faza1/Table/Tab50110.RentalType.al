@@ -33,7 +33,7 @@ table 50110 "Rental Type"
             Caption = 'Deposit Amount';
             trigger OnValidate()
             begin
-                if "Requires Deposit" and "Deposit Amount" <= 0 then
+                if "Requires Deposit" and ("Deposit Amount" <= 0) then
                     Error('Znesek mora biti večji od 0');
             end;
         }
