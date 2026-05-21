@@ -8,6 +8,7 @@ page 50110 "Rental Type Page"
     UsageCategory = Lists;
     SourceTable = "Rental Type";
     CardPageId = "Rental Type Card";
+    Editable = false;
 
     layout
     {
@@ -18,28 +19,32 @@ page 50110 "Rental Type Page"
                 field("Code"; Rec."Code")
                 {
                     ToolTip = 'Specifies the value of the Code field.', Comment = '%';
+                    ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
                 {
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Description field.', Comment = '%';
                 }
                 field("Daily Rate"; Rec."Daily Rate")
                 {
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Daily Rate field.', Comment = '%';
                 }
                 field("Max Rental Days"; Rec."Max Rental Days")
                 {
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Max Rental Days field.', Comment = '%';
                 }
-            }
-            group(Deposit)
-            {
+
                 field("Requires Deposit"; Rec."Requires Deposit")
                 {
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Requires Deposit field.', Comment = '%';
                 }
                 field("Deposit Amount"; Rec."Deposit Amount")
                 {
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Deposit Amount field.', Comment = '%';
                 }
             }

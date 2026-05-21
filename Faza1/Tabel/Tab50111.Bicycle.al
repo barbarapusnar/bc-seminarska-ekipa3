@@ -3,6 +3,7 @@ table 50111 Bicycle
     Caption = 'Bicycle';
     DataClassification = ToBeClassified;
 
+
     fields
     {
         field(1; No; Code[20])
@@ -15,19 +16,13 @@ table 50111 Bicycle
             Caption = 'Rental Type Code';
             NotBlank = true;
             TableRelation = "Rental Type".Code;
-            trigger OnValidate()
-            var
-                RentalType: Record "Rental Type";
-            begin
-                if RentalType.Get("Rental Type Code") then Description := RentalType.Description;
-            end;
         }
         field(3; Description; Text[150])
         {
             Caption = 'Description';
-            // Naredi LOOKUP za to
-            //FieldClass = FlowField;
-            //CalcFormula = lookup();
+            FieldClass = FlowField;
+            CalcFormula = lookup("Rental Type".Description where(Code = field("Rental Type Code")));
+            Editable = false;
         }
         field(4; "Status"; Enum "Bicycle Status")
         {

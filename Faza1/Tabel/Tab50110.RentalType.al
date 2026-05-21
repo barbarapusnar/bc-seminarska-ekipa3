@@ -1,6 +1,8 @@
 table 50110 "Rental Type"
 {
     Caption = 'Rental Type';
+    LookupPageId = "Rental Type Page";
+    DrillDownPageId = "Rental Type Page";
     DataClassification = ToBeClassified;
 
     fields

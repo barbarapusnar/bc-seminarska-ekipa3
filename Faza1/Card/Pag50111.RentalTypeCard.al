@@ -17,6 +17,7 @@ page 50111 "Rental Type Card"
 
                 field("Code"; Rec."Code")
                 {
+                    ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Code field.', Comment = '%';
                 }
                 field(Description; Rec.Description)
@@ -35,6 +36,7 @@ page 50111 "Rental Type Card"
             }
             group(Deposit)
             {
+                Caption = 'Deposit';
                 field("Requires Deposit"; Rec."Requires Deposit")
                 {
                     ToolTip = 'Specifies the value of the Requires Deposit field.', Comment = '%';
