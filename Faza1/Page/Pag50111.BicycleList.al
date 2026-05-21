@@ -52,4 +52,19 @@ page 50111 "Bicycle List"
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action(NewBicycle)
+            {
+                ApplicationArea = All;
+                Caption = 'New';
+                Image = New;
+                RunObject = page "Bicycle Card ";
+                RunPageMode = Create;
+                ToolTip = 'Create a new bicycle.';
+            }
+        }
+    }
 }

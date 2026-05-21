@@ -31,6 +31,7 @@ page 50113 "Bicycle Card "
                 field(Status; Rec.Status)
                 {
                     ToolTip = 'Specifies the value of the Status field.', Comment = '%';
+                    Editable = false;
                 }
             }
             group(Purchases)
