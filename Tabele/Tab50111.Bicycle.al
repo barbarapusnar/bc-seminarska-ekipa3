@@ -13,10 +13,15 @@ table 50111 Bicycle
         {
             Caption = 'Rental Type Code';
             NotBlank = true;
+            TableRelation = "Rental Type"."Code";
+            ToolTip = 'Select the rental type for this bicycle.';
         }
         field(3; Description; Text[200])
         {
             Caption = 'Description';
+            FieldClass = FlowField;
+            CalcFormula = Lookup("Rental Type"."Description" WHERE("Code" = FIELD("Rental Type Code")));
+            Editable = false;
         }
         field(4; Status; Enum "Bicycle Status")
         {

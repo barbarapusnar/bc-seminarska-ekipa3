@@ -8,6 +8,7 @@ page 50111 "Rental Type Card"
     SourceTable = "Rental Type";
     CardPageId = "Rental Type List";
 
+
     layout
     {
         area(Content)
@@ -24,10 +25,7 @@ page 50111 "Rental Type Card"
                 {
                     ToolTip = 'Specifies the value of the Daily Rate field.', Comment = '%';
                 }
-                field("Deposit Amount"; Rec."Deposit Amount")
-                {
-                    ToolTip = 'Specifies the value of the Deposit Amount field.', Comment = '%';
-                }
+
                 field(Description; Rec.Description)
                 {
                     ToolTip = 'Specifies the value of the Description field.', Comment = '%';
@@ -39,6 +37,13 @@ page 50111 "Rental Type Card"
                 field("Requires Deposit"; Rec."Requires Deposit")
                 {
                     ToolTip = 'Specifies the value of the Requires Deposit field.', Comment = '%';
+                }
+            }
+            group(Advanced)
+            {
+                field("Deposit Amount"; Rec."Deposit Amount")
+                {
+                    ToolTip = 'Specifies the value of the Deposit Amount field.', Comment = '%';
                 }
             }
         }

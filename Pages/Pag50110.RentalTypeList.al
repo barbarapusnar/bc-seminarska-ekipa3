@@ -7,6 +7,7 @@ page 50110 "Rental Type List"
     PageType = List;
     SourceTable = "Rental Type";
     CardPageId = "Rental Type Card";
+    UsageCategory = Lists;
 
     layout
     {

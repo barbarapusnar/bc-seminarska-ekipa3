@@ -7,6 +7,7 @@ page 50112 "Bicycle List"
     PageType = List;
     SourceTable = Bicycle;
     CardPageId = "Bicycle Card";
+    UsageCategory = Lists;
 
     layout
     {
@@ -31,9 +32,9 @@ page 50112 "Bicycle List"
                 {
                     ToolTip = 'Specifies the value of the Purchase Price field.', Comment = '%';
                 }
-                // }
-                // group(Advanced)
-                // {
+            }
+            group(Advanced)
+            {
                 field("Purchase Date"; Rec."Purchase Date")
                 {
                     ToolTip = 'Specifies the value of the Purchase Date field.', Comment = '%';

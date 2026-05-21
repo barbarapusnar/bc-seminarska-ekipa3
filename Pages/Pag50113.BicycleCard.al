@@ -33,9 +33,9 @@ page 50113 "Bicycle Card"
                 {
                     ToolTip = 'Specifies the value of the Current Location field.', Comment = '%';
                 }
-                // }
-                // group(Advanced)
-                // {
+            }
+            group(Advanced)
+            {
                 field("Last Service Date"; Rec."Last Service Date")
                 {
                     ToolTip = 'Specifies the value of the Last Service Date field.', Comment = '%';
@@ -48,6 +48,7 @@ page 50113 "Bicycle Card"
                 field("Rental Type Code"; Rec."Rental Type Code")
                 {
                     ToolTip = 'Specifies the value of the Rental Type Code field.', Comment = '%';
+
                 }
                 field(Status; Rec.Status)
                 {
