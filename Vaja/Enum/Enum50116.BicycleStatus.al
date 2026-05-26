@@ -1,6 +1,6 @@
 namespace bcseminarskaekipa.bcseminarskaekipa;
 
-enum 50110 "Bicycle Status"
+enum 50116 "Bicycle Status"
 {
     Extensible = true;
 

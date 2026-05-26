@@ -1,4 +1,4 @@
-table 50112 "Rental Header"
+table 50113 "Rental Header"
 {
     Caption = 'Rental Header';
     DataClassification = ToBeClassified;

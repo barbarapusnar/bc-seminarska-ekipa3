@@ -1,9 +1,9 @@
 namespace bcseminarskaekipa.bcseminarskaekipa;
 
-enum 50111 "Rental Status"
+enum 50115 "Rental Status"
 {
     Extensible = true;
-    
+
     value(0; Open)
     {
         Caption = 'Odprto';
