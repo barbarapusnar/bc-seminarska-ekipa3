@@ -25,9 +25,17 @@ table 50113 "Rental Line"
                 RentalType: Record "Rental Type";
             begin
                 if Bicycle.Get("Bicycle No.") then begin
+                    if Bicycle.Status <> Bicycle.Status::Available then
+                        Error('Kolesa %1 ni mogoče izbrati, ker nima statusa Available.', "Bicycle No.");
+
+                    Bicycle.CalcFields(Description);
                     Description := Bicycle.Description;
+
                     if RentalType.Get(Bicycle."Rental Type Code") then
                         "Daily Rate" := RentalType."Daily Rate";
+
+                    if "Rental Days" > 0 then
+                        "Line Amount" := "Daily Rate" * "Rental Days";
                 end;
             end;
         }
@@ -50,6 +58,9 @@ table 50113 "Rental Line"
 
             trigger OnValidate()
             begin
+                if "Rental Days" <= 0 then
+                    Error('Rental Days mora biti večji od 0.');
+
                 "Line Amount" := "Daily Rate" * "Rental Days";
             end;
         }

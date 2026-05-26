@@ -12,14 +12,28 @@ table 50112 "Rental Header"
         field(2; "Customer No."; Code[20])
         {
             Caption = 'Customer No.';
+            TableRelation = Customer."No.";
+            NotBlank = true;
         }
         field(3; "Rental Date"; Date)
         {
             Caption = 'Rental Date';
+            trigger OnValidate()
+            begin
+                if ("Expected Return Date" <> 0D) and ("Expected Return Date" < "Rental Date")
+                then
+                    Error('Expected Return Date ne sme biti manjši od Rental Date.');
+            end;
         }
         field(4; "Expected Return Date"; Date)
         {
             Caption = 'Expected Return Date';
+            trigger OnValidate()
+            begin
+                if ("Rental Date" <> 0D) and
+                   ("Expected Return Date" < "Rental Date") then
+                    Error('Expected Return Date ne sme biti manjši od Rental Date.');
+            end;
         }
         field(5; "Actual Return Date"; Date)
         {
