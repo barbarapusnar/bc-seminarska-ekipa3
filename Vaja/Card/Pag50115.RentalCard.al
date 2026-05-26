@@ -60,4 +60,40 @@ page 50115 "Rental Card"
             }
         }
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(StartRental)
+            {
+                ApplicationArea = All;
+                Caption = 'Start Rental';
+                Image = Start;
+                ToolTip = 'Start the rental. Sets bicycle statuses to Rented.';
+
+                trigger OnAction()
+                var
+                    RentalMgt: Codeunit "Rental Management";
+                begin
+                    RentalMgt.StartRental(Rec);
+                end;
+            }
+            action(ProcessReturn)
+            {
+                ApplicationArea = All;
+                Caption = 'Process Return';
+                Image = Return;
+                ToolTip = 'Process the return. Sets bicycle statuses back to Available.';
+
+                trigger OnAction()
+                var
+                    RentalMgt: Codeunit "Rental Management";
+                begin
+                    RentalMgt.ProcessReturn(Rec);
+                end;
+            }
+        }
+    }
+
 }
