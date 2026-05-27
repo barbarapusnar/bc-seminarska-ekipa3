@@ -5,6 +5,7 @@ query 50110 "Rental Analysis"
 {
     Caption = 'Rental Analysis';
     QueryType = Normal;
+    UsageCategory = ReportsAndAnalysis;
 
     elements
     {
@@ -35,7 +36,6 @@ query 50110 "Rental Analysis"
                     Caption = 'Customer Name';
                 }
 
-                // ✅ RentalLine zgnezden v Customer
                 dataitem(Rental_Line; "Rental Line")
                 {
                     DataItemLink = "Rental No." = Rental_Header."No.";
@@ -45,10 +45,6 @@ query 50110 "Rental Analysis"
                     {
                         Caption = 'Bicycle No.';
                     }
-                    column(Bicycle_Description; Description)
-                    {
-                        Caption = 'Bicycle Description';
-                    }
                     column(Rental_Days; "Rental Days")
                     {
                         Caption = 'Rental Days';
@@ -57,7 +53,20 @@ query 50110 "Rental Analysis"
                     {
                         Caption = 'Line Amount';
                     }
+
+
+                    dataitem(Bicycle; Bicycle)
+                    {
+                        DataItemLink = No = Rental_Line."Bicycle No.";
+                        SqlJoinType = LeftOuterJoin;
+
+                        column(Bicycle_Description; Description)
+                        {
+                            Caption = 'Bicycle Description';
+                        }
+                    }
                 }
+
             }
         }
     }
