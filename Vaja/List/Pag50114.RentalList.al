@@ -5,10 +5,9 @@ page 50114 "Rental List"
     ApplicationArea = All;
     Caption = 'Rental List';
     PageType = List;
-    UsageCategory = Lists;
     SourceTable = "Rental Header";
+    UsageCategory = Lists;
     CardPageId = "Rental Card";
-    Editable = false;
 
     layout
     {
@@ -18,34 +17,57 @@ page 50114 "Rental List"
             {
                 field("No."; Rec."No.")
                 {
-                    ApplicationArea = All;
                     ToolTip = 'Specifies the rental number.';
+                    ApplicationArea = All;
                 }
                 field("Customer No."; Rec."Customer No.")
                 {
-                    ApplicationArea = All;
                     ToolTip = 'Specifies the customer number.';
+                    ApplicationArea = All;
                 }
                 field("Rental Date"; Rec."Rental Date")
                 {
+                    ToolTip = 'Specifies the rental start date.';
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the rental date.';
                 }
                 field("Expected Return Date"; Rec."Expected Return Date")
                 {
-                    ApplicationArea = All;
                     ToolTip = 'Specifies the expected return date.';
+                    ApplicationArea = All;
                 }
                 field(Status; Rec.Status)
                 {
+                    ToolTip = 'Specifies the rental status.';
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the status of the rental.';
                 }
                 field("Total Amount"; Rec."Total Amount")
                 {
+                    ToolTip = 'Specifies the total rental amount.';
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the total amount of the rental.';
                 }
+            }
+        }
+    }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(PrintRentalAnalysis)
+            {
+                ApplicationArea = All;
+                Caption = 'Pregled izposoj';
+                ToolTip = 'Odpre poročilo s pregledom izposoj po strankah.';
+                Image = Report;
+                Promoted = true;
+                PromotedCategory = Report;
+                PromotedIsBig = true;
+
+
+                trigger OnAction()
+                begin
+                    Report.RunModal(Report::ReportAnalysis);
+                end;
             }
         }
     }
