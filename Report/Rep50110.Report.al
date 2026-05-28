@@ -1,3 +1,4 @@
+using Microsoft.Sales.Customer;
 report 50120 "Customer Rental Report"
 {
     Caption = 'Customer Rental Report';
@@ -94,6 +95,8 @@ report 50120 "Customer Rental Report"
             begin
                 CustomerTotalAmount := 0;
             end;
+
+
         }
     }
 
