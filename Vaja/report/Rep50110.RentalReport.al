@@ -3,47 +3,44 @@ using Microsoft.Sales.Customer;
 
 report 50110 "Rental Report"
 {
-    // NEDELA !!
     Caption = 'Pregled izposoj po strankah';
+
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
-    DefaultLayout = Word;
-    //WordLayout = 'Rental_report.docx';
+
+    DefaultRenderingLayout = WordLayout;
 
     dataset
     {
         dataitem(Customer; Customer)
         {
-            column(Customer_No; "No.") { }
-            column(Customer_Name; Name) { }
+            column(CustomerNo; "No.") { }
+            column(CustomerName; Name) { }
 
             dataitem(RentalHeader; "Rental Header")
             {
-                DataItemLink = "Customer No." = field("No.");
-                DataItemTableView = sorting("No.");
+                DataItemLink = "Customer No." = FIELD("No.");
 
-                column(Rental_No; "No.") { }
-                column(Rental_Date; "Rental Date") { }
-                column(Expected_Return_Date; "Expected Return Date") { }
-                column(Actual_Return_Date; "Actual Return Date") { }
-                column(Rental_Status; Status) { }
-                column(Total_Amount; "Total Amount") { }
+                column(RentalNo; "No.") { }
+                column(RentalDate; "Rental Date") { }
+                column(ExpectedReturnDate; "Expected Return Date") { }
+                column(ActualReturnDate; "Actual Return Date") { }
+                column(Status; Status) { }
+                column(TotalAmount; "Total Amount") { }
 
                 dataitem(RentalLine; "Rental Line")
                 {
-                    DataItemLink = "Rental No." = field("No.");
-                    DataItemTableView = sorting("Rental No.", "Line No.");
+                    DataItemLink = "Rental No." = FIELD("No.");
 
-                    column(Bicycle_No; "Bicycle No.") { }
-                    column(Line_Description; Description) { }
-                    column(Rental_Days; "Rental Days") { }
-                    column(Daily_Rate; "Daily Rate") { }
-                    column(Line_Amount; "Line Amount") { }
+                    column(BicycleNo; "Bicycle No.") { }
+                    column(Description; Description) { }
+                    column(RentalDays; "Rental Days") { }
+                    column(DailyRate; "Daily Rate") { }
+                    column(LineAmount; "Line Amount") { }
                 }
             }
         }
     }
-
     requestpage
     {
         layout
@@ -57,18 +54,17 @@ report 50110 "Rental Report"
         }
     }
 
-    labels
+    rendering
     {
-        Report_Title = 'Pregled izposoj po strankah';
-        Lbl_CustomerNo = 'Šifra stranke';
-        Lbl_CustomerName = 'Stranka';
-        Lbl_RentalNo = 'Rental No.';
-        Lbl_Date = 'Datum';
-        Lbl_Bicycle = 'Kolo';
-        Lbl_Description = 'Opis';
-        Lbl_Days = 'Dni';
-        Lbl_Price = 'Cena';
-        Lbl_Amount = 'Znesek';
-        Lbl_Total = 'Skupni znesek';
+        layout(WordLayout)
+        {
+            Type = Word;
+            LayoutFile = 'Layouts/RentalOverview.docx';
+        }
+        layout(RDLCLayout)
+        {
+            Type = RDLC;
+            LayoutFile = 'Layouts/RentalOverview.rdlc';
+        }
     }
 }

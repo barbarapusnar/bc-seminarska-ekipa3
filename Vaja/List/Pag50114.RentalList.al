@@ -49,4 +49,23 @@ page 50114 "Rental List"
             }
         }
     }
+
+    actions
+    {
+        area(Reporting)
+        {
+            action(PrintRentalReport)
+            {
+                ApplicationArea = All;
+                Caption = 'Pregled izposoj';
+                Image = Report;
+                ToolTip = 'Odpre poročilo o izposojah po strankah.';
+
+                trigger OnAction()
+                begin
+                    Report.Run(Report::"Rental Report");
+                end;
+            }
+        }
+    }
 }
