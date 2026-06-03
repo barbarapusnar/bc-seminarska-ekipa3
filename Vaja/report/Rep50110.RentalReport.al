@@ -7,6 +7,7 @@ report 50110 "Rental Report"
 
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
+    WordMergeDataItem = customer;
 
     DefaultRenderingLayout = WordLayout;
 
@@ -16,12 +17,16 @@ report 50110 "Rental Report"
         {
             column(CustomerNo; "No.") { }
             column(CustomerName; Name) { }
+            column(TodayDate; Today) { }
 
             dataitem(RentalHeader; "Rental Header")
             {
                 DataItemLink = "Customer No." = FIELD("No.");
+                DataItemTableView = where(Status = const(Active));
 
-                column(RentalNo; "No.") { }
+                column(RentalNo;
+                "No.")
+                { }
                 column(RentalDate; "Rental Date") { }
                 column(ExpectedReturnDate; "Expected Return Date") { }
                 column(ActualReturnDate; "Actual Return Date") { }
@@ -39,6 +44,15 @@ report 50110 "Rental Report"
                     column(LineAmount; "Line Amount") { }
                 }
             }
+            trigger OnAfterGetRecord()
+            var
+                RentalHeader: Record "Rental Header";
+            begin
+                RentalHeader.SetRange("Customer No.", "No.");
+                RentalHeader.SetRange(Status, RentalHeader.Status::Active);
+                if RentalHeader.IsEmpty() then
+                    CurrReport.Skip();
+            end;
         }
     }
     requestpage

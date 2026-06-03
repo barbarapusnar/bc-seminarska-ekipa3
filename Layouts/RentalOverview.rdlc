@@ -70,6 +70,9 @@ End Function
         <Field Name="CustomerName">
           <DataField>CustomerName</DataField>
         </Field>
+        <Field Name="TodayDate">
+          <DataField>TodayDate</DataField>
+        </Field>
         <Field Name="RentalNo">
           <DataField>RentalNo</DataField>
         </Field>
