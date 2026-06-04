@@ -17,26 +17,58 @@ table 50113 "Rental Line"
         field(3; "Bicycle No."; Code[20])
         {
             Caption = 'Bicycle No.';
-            TableRelation = Bicycle.No;
+            TableRelation = Bicycle."No";
 
             trigger OnValidate()
             var
                 Bicycle: Record Bicycle;
+                RentalHeader: Record "Rental Header";
                 RentalType: Record "Rental Type";
+                RentalPrice: Record RentalPriceCenik;
             begin
-                if Bicycle.Get("Bicycle No.") then begin
-                    if Bicycle.Status <> Bicycle.Status::Available then
-                        Error('Kolesa %1 ni mogoče izbrati, ker nima statusa Available.', "Bicycle No.");
-
-                    Bicycle.CalcFields(Description);
-                    Description := Bicycle.Description;
-
-                    if RentalType.Get(Bicycle."Rental Type Code") then
-                        "Daily Rate" := RentalType."Daily Rate";
-
-                    if "Rental Days" > 0 then
-                        "Line Amount" := "Daily Rate" * "Rental Days";
+                if "Bicycle No." = '' then begin
+                    Description := '';
+                    "Daily Rate" := 0;
+                    CalcLineAmount();
+                    exit;
                 end;
+
+
+                if not RentalHeader.Get("Rental No.") then
+                    Error('Za vrstico izposoje %1 ne obstaja glava izposoje.', "Rental No.");
+
+
+                if not Bicycle.Get("Bicycle No.") then
+                    Error('Kolo %1 ne obstaja v sistemu.', "Bicycle No.");
+
+
+                if Bicycle."Rental Type Code" = '' then
+                    Error('Kolo %1 nima določenega tipa kolesa.', "Bicycle No.");
+
+
+                if Bicycle.Status <> Bicycle.Status::Available then
+                    Error('Kolo %1 ni na voljo za izposojo.', "Bicycle No.");
+
+
+                Description := Bicycle.Description;
+
+
+                RentalPrice.SetRange("Rental Type Code", Bicycle."Rental Type Code");
+                RentalPrice.SetFilter("Starting date", '<=%1', RentalHeader."Rental Date");
+                RentalPrice.SetFilter("Ending date", '>=%1', RentalHeader."Rental Date");
+
+                if RentalPrice.FindFirst() then
+                    "Daily Rate" := RentalPrice."Daily rate"
+                else begin
+
+                    if not RentalType.Get(Bicycle."Rental Type Code") then
+                        Error('Za tip kolesa %1 ne obstaja niti veljaven cenik niti osnovna cena.', Bicycle."Rental Type Code");
+                    if RentalType."Daily Rate" = 0 then
+                        Error('Za tip kolesa %1 ne obstaja niti veljaven cenik niti osnovna cena.', Bicycle."Rental Type Code");
+                    "Daily Rate" := RentalType."Daily Rate";
+                end;
+
+                CalcLineAmount();
             end;
         }
         field(4; Description; Text[150])
@@ -77,4 +109,8 @@ table 50113 "Rental Line"
             Clustered = true;
         }
     }
+    procedure CalcLineAmount()
+    begin
+        "Line Amount" := "Daily Rate" * "Rental Days";
+    end;
 }
