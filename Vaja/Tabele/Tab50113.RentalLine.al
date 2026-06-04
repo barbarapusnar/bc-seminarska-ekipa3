@@ -23,20 +23,53 @@ table 50113 "Rental Line"
             var
                 Bicycle: Record Bicycle;
                 RentalType: Record "Rental Type";
+                RentalHeader: Record "Rental Header";
+                RentalPriceList: Record "Rental Price List";
+                RentalDate: Date;
             begin
-                if Bicycle.Get("Bicycle No.") then begin
-                    if Bicycle.Status <> Bicycle.Status::Available then
-                        Error('Kolesa %1 ni mogoče izbrati, ker nima statusa Available.', "Bicycle No.");
+                // Preveri ali obstaja glava izposoje
+                if not RentalHeader.Get("Rental No.") then
+                    Error('Za izbrano vrstico ne obstaja glava izposoje.');
 
-                    Bicycle.CalcFields(Description);
-                    Description := Bicycle.Description;
+                RentalDate := RentalHeader."Rental Date";
 
-                    if RentalType.Get(Bicycle."Rental Type Code") then
+                // Preveri ali kolo obstaja
+                if not Bicycle.Get("Bicycle No.") then
+                    Error('Izbranega kolesa ni mogoče najti.');
+
+                // Preveri status kolesa
+                if Bicycle.Status <> Bicycle.Status::Available then
+                    Error('Kolesa %1 ni mogoče izbrati, ker nima statusa Available.', "Bicycle No.");
+
+                // Preveri ali ima kolo tip
+                if Bicycle."Rental Type Code" = '' then
+                    Error('Izbrano kolo nima določenega tipa kolesa.');
+
+                // Prenesi opis
+                Bicycle.CalcFields(Description);
+                Description := Bicycle.Description;
+
+                // Poišči cenik
+                RentalPriceList.SetRange("Rental Type Code", Bicycle."Rental Type Code");
+                RentalPriceList.SetFilter("Starting Date", '<=%1', RentalDate);
+                RentalPriceList.SetFilter("Ending Date", '>=%1', RentalDate);
+
+                if RentalPriceList.FindFirst() then
+                    // Cena iz cenika
+                    "Daily Rate" := RentalPriceList."Daily Rate"
+                else begin
+                    // Osnovna cena iz Rental Type
+                    if RentalType.Get(Bicycle."Rental Type Code") then begin
+                        if RentalType."Daily Rate" = 0 then
+                            Error('Za tip kolesa %1 ne obstaja niti veljaven cenik niti osnovna cena.', Bicycle."Rental Type Code");
                         "Daily Rate" := RentalType."Daily Rate";
-
-                    if "Rental Days" > 0 then
-                        "Line Amount" := "Daily Rate" * "Rental Days";
+                    end else
+                        Error('Za tip kolesa %1 ne obstaja niti veljaven cenik niti osnovna cena.', Bicycle."Rental Type Code");
                 end;
+
+                // Izračunaj Line Amount
+                if "Rental Days" > 0 then
+                    "Line Amount" := "Daily Rate" * "Rental Days";
             end;
         }
         field(4; Description; Text[150])
