@@ -58,4 +58,28 @@ table 50112 "Rental Header"
             Clustered = true;
         }
     }
+    trigger OnInsert()
+    var
+        Customer: Record Customer;
+        ActiveRentals: Record "Rental Header";
+        ActiveRentalCount: Integer;
+    begin
+        if "Customer No." = '' then
+            exit;
+
+        if not Customer.Get("Customer No.") then
+            exit;
+
+        // Preveri samo če ima stranka nastavljeno omejitev
+        if Customer."Max Active Rentals" = 0 then
+            exit;
+
+        // Preštej aktivne izposoje za stranko
+        ActiveRentals.SetRange("Customer No.", "Customer No.");
+        ActiveRentals.SetRange(Status, Status::Active);
+        ActiveRentalCount := ActiveRentals.Count();
+
+        if ActiveRentalCount >= Customer."Max Active Rentals" then
+            Error('Stranka je že dosegla maksimalno dovoljeno število aktivnih izposoj (%1).', Customer."Max Active Rentals");
+    end;
 }
