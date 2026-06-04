@@ -14,6 +14,10 @@ table 50112 "Rental Header"
             Caption = 'Customer No.';
             TableRelation = Customer."No.";
             NotBlank = true;
+            trigger OnValidate()
+            begin
+                CheckMaxActiveRentals();  // Preveri takoj ko uporabnik vnese stranko
+            end;
         }
         field(3; "Rental Date"; Date)
         {
@@ -58,4 +62,38 @@ table 50112 "Rental Header"
             Clustered = true;
         }
     }
+
+    trigger OnInsert()
+    begin
+        CheckMaxActiveRentals();
+    end;
+
+    local procedure CheckMaxActiveRentals()
+    var
+        Customer: Record Customer;
+        RentalHeader: Record "Rental Header";
+        ActiveRentals: Integer;
+    begin
+        // Preveri samo če je Customer No. izpolnjen
+        if "Customer No." = '' then
+            exit;
+
+        // Pridobi stranko
+        if not Customer.Get("Customer No.") then
+            exit;
+
+        // Preveri samo če je Max Active Rentals nastavljen
+        if Customer."Max Active Rentals" = 0 then
+            exit;
+
+        // Preštej aktivne izposoje
+        RentalHeader.SetRange("Customer No.", "Customer No.");
+        RentalHeader.SetRange(Status, RentalHeader.Status::Active);
+        ActiveRentals := RentalHeader.Count();
+
+        // Javi napako če je prekoračeno
+        if ActiveRentals >= Customer."Max Active Rentals" then
+            Error('Stranka %1 je že dosegla maksimalno dovoljeno število aktivnih izposoj (%2).',
+                "Customer No.", Customer."Max Active Rentals");
+    end;
 }
