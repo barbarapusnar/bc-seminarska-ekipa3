@@ -70,7 +70,7 @@ page 50115 "Rental Card"
                 ApplicationArea = All;
                 Caption = 'Start Rental';
                 Image = Start;
-                ToolTip = 'Start the rental. Sets bicycle statuses to Rented.';
+                ToolTip = 'Start the rental.';
 
                 trigger OnAction()
                 var
@@ -84,7 +84,7 @@ page 50115 "Rental Card"
                 ApplicationArea = All;
                 Caption = 'Process Return';
                 Image = Return;
-                ToolTip = 'Process the return. Sets bicycle statuses back to Available.';
+                ToolTip = 'Process the return.';
 
                 trigger OnAction()
                 var
@@ -93,7 +93,20 @@ page 50115 "Rental Card"
                     RentalMgt.ProcessReturn(Rec);
                 end;
             }
+            action(CreateSalesInvoice)
+            {
+                ApplicationArea = All;
+                Caption = 'Create Sales Invoice';
+                Image = Invoice;
+                ToolTip = 'Creates a sales invoice for this rental.';
+
+                trigger OnAction()
+                var
+                    CreateInvoice: Codeunit "Create Sales Invoice";
+                begin
+                    CreateInvoice.CreateInvoice(Rec);  // Pokliče codeunit
+                end;
+            }
         }
     }
-
 }
