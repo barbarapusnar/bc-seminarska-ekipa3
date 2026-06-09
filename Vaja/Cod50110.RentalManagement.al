@@ -1,5 +1,5 @@
 namespace bcseminarskaekipa.bcseminarskaekipa;
-
+using Microsoft.Sales.Document;
 codeunit 50110 "Rental Management"
 {
     procedure StartRental(var RentalHeader: Record "Rental Header")
