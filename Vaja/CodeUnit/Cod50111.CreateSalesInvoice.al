@@ -22,7 +22,7 @@ codeunit 50111 "Create Sales Invoice"
         SalesHeader.Validate("Sell-to Customer No.", RentalHeader."Customer No.");  // Validate zapolni ime
         SalesHeader.Validate("Document Date", Today);
         SalesHeader.Validate("Posting Date", Today);
-        SalesHeader.Modify(true);                                              // Shrani
+        SalesHeader.Modify(true);                                              //Shrani
 
         LineNo := 10000;
 
@@ -46,6 +46,7 @@ codeunit 50111 "Create Sales Invoice"
 
         // Prikaži ustvarjeni račun
         Message('Prodajni račun %1 je bil uspešno ustvarjen.', SalesHeader."No.");
+
         Page.Run(Page::"Sales Invoice", SalesHeader);
     end;
 }
