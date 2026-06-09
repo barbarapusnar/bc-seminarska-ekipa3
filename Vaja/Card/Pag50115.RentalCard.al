@@ -58,6 +58,7 @@ page 50115 "Rental Card"
                 SubPageLink = "Rental No." = field("No.");
                 Caption = 'Rental Lines';
             }
+
         }
     }
 
@@ -91,6 +92,19 @@ page 50115 "Rental Card"
                     RentalMgt: Codeunit "Rental Management";
                 begin
                     RentalMgt.ProcessReturn(Rec);
+                end;
+            }
+
+            action(CreateSalesInvoice)
+            {
+                Caption = 'Create Sales Invoice';
+                Image = Invoice;
+
+                trigger OnAction()
+                var
+                    RentalMgt: Codeunit "Rental Management";
+                begin
+                    RentalMgt.CreateSalesInvoice(Rec);
                 end;
             }
         }
