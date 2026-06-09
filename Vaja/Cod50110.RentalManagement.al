@@ -74,4 +74,58 @@ codeunit 50110 "Rental Management"
         RentalHeader.Status := RentalHeader.Status::Returned;
         RentalHeader.Modify();
     end;
+
+    procedure CreateSalesInvoice(var RentalHeader: Record "Rental Header")
+    var
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+        RentalLine: Record "Rental Line";
+        LineNo: Integer;
+    begin
+        //  (Returned)
+        if RentalHeader.Status <> RentalHeader.Status::Returned then
+            Error('Prodajni dokument je mogoče ustvariti samo za zaključeno izposojo (status Returned).');
+
+        // Preveri da stranka obstaja
+        if RentalHeader."Customer No." = '' then
+            Error('Izposoja nima določene stranke.');
+
+        // Preveri da obstajajo vrstice
+        RentalLine.SetRange("Rental No.", RentalHeader."No.");
+        if RentalLine.IsEmpty() then
+            Error('Izposoja ne vsebuje nobene vrstice.');
+
+        // Ustvari Sales Header (glavo računa)
+        SalesHeader.Init();
+        SalesHeader."Document Type" := SalesHeader."Document Type"::Invoice;
+        SalesHeader.Insert(true);
+
+        SalesHeader."Sell-to Customer No." := RentalHeader."Customer No.";
+        SalesHeader.Validate("Sell-to Customer No.");
+        SalesHeader."Document Date" := Today;
+        SalesHeader."Posting Date" := Today;
+        SalesHeader."Your Reference" := RentalHeader."No.";
+        SalesHeader.Modify(true);
+
+        // Ustvari Sales Lines za vsako vrstico izposoje
+        LineNo := 10000;
+        RentalLine.FindSet();
+        repeat
+            SalesLine.Init();
+            SalesLine."Document Type" := SalesHeader."Document Type";
+            SalesLine."Document No." := SalesHeader."No.";
+            SalesLine."Line No." := LineNo;
+            SalesLine.Type := SalesLine.Type::Item;
+            SalesLine.Validate("No.", 'RENTAL');
+            SalesLine.Description := RentalLine.Description;
+            SalesLine.Validate(Quantity, RentalLine."Rental Days");
+            SalesLine.Validate("Unit Price", RentalLine."Daily Rate");
+            SalesLine.Insert(true);
+
+            LineNo += 10000;
+        until RentalLine.Next() = 0;
+
+        Message('Prodajni račun %1 je bil uspešno ustvarjen za stranko %2.',
+            SalesHeader."No.", RentalHeader."Customer No.");
+    end;
 }

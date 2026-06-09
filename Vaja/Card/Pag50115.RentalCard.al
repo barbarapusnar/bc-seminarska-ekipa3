@@ -93,6 +93,20 @@ page 50115 "Rental Card"
                     RentalMgt.ProcessReturn(Rec);
                 end;
             }
+            action(CreateSalesInvoice)
+            {
+                ApplicationArea = All;
+                Caption = 'Create Sales Invoice';
+                Image = Invoice;
+                ToolTip = 'Ustvari prodajni račun za to izposojo.';
+
+                trigger OnAction()
+                var
+                    RentalMgt: Codeunit "Rental Management";
+                begin
+                    RentalMgt.CreateSalesInvoice(Rec);
+                end;
+            }
         }
     }
 
