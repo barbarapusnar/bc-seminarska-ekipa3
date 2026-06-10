@@ -1,0 +1,13 @@
+<Root>
+    <Bicycle>
+        <No>B001</No>
+        <RentalTypeCode>MTB</RentalTypeCode>
+        <Description>Mountain Bike</Description>
+    </Bicycle>
+
+    <Bicycle>
+        <No>B002</No>
+        <RentalTypeCode>CITY</RentalTypeCode>
+        <Description>City Bike</Description>
+    </Bicycle>
+</Root>

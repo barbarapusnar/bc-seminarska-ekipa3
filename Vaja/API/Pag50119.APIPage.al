@@ -1,17 +1,23 @@
-namespace bcseminarskaekipa.bcseminarskaekipa;
-
-page 50119 "API Page"
+page 50119 "Bicycle API"
 {
-    APIGroup = 'apiGroup';
-    APIPublisher = 'publisherName';
-    APIVersion = 'v1.0';
-    ApplicationArea = All;
-    Caption = 'apiPage';
-    DelayedInsert = true;
-    EntityName = 'entityName';
-    EntitySetName = 'entitySetName';
     PageType = API;
+
+    APIPublisher = 'ekipa';
+    APIGroup = 'rental';
+    APIVersion = 'v1.0';
+
+    EntityName = 'bicycle';
+    EntitySetName = 'bicycles';
+
     SourceTable = Bicycle;
+
+    ODataKeyFields = SystemId;
+
+    DelayedInsert = true;
+
+    InsertAllowed = false;
+    ModifyAllowed = false;
+    DeleteAllowed = false;
 
     layout
     {
@@ -21,19 +27,15 @@ page 50119 "API Page"
             {
                 field(no; Rec.No)
                 {
-                    Caption = 'No';
                 }
                 field(description; Rec.Description)
                 {
-                    Caption = 'Description';
                 }
                 field(status; Rec.Status)
                 {
-                    Caption = 'Status';
                 }
                 field(rentalTypeCode; Rec."Rental Type Code")
                 {
-                    Caption = 'Rental Type Code';
                 }
             }
         }
