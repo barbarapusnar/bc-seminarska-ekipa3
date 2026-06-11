@@ -13,8 +13,6 @@ page 50119 "Bicycle API"
 
     ODataKeyFields = SystemId;
 
-    DelayedInsert = true;
-
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
@@ -28,12 +26,15 @@ page 50119 "Bicycle API"
                 field(no; Rec.No)
                 {
                 }
+
                 field(description; Rec.Description)
                 {
                 }
+
                 field(status; Rec.Status)
                 {
                 }
+
                 field(rentalTypeCode; Rec."Rental Type Code")
                 {
                 }
