@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bicycles>
+    <Bicycle>
+        <No>KOL-010</No>
+        <RentalTypeCode>BASIC</RentalTypeCode>
+    </Bicycle>
+    <Bicycle>
+        <No>KOL-011</No>
+        <RentalTypeCode>BASIC</RentalTypeCode>
+    </Bicycle>
+    <Bicycle>
+        <No>KOL-012</No>
+        <RentalTypeCode>BASIC</RentalTypeCode>
+    </Bicycle>
+    <Bicycle>
+        <No>KOL-013</No>
+        <RentalTypeCode>NEOBSTOJI</RentalTypeCode>
+    </Bicycle>
+</Bicycles>

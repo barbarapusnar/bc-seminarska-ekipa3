@@ -59,4 +59,23 @@ page 50112 "Bicycle Page"
             }
         }
     }
+
+    actions
+    {
+        area(Processing)
+        {
+            action(ImportBicycles)
+            {
+                ApplicationArea = All;
+                Caption = 'Import Bicycles';
+                Image = Import;
+                ToolTip = 'Import bicycles from XML file.';
+
+                trigger OnAction()
+                begin
+                    XMLport.Run(XMLport::"Import Bicycles");
+                end;
+            }
+        }
+    }
 }
